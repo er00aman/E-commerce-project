@@ -24,9 +24,11 @@ const clothStorage = multer.diskStorage({
     cb(null, file.fieldname + '-' + uniqueSuffix+file.originalname)
   }
 })
-
 const clothUpload = multer({ storage: clothStorage })
-
 router.post('/manClothe/add',clothUpload.single('manClotheImage'),manClothe.add)
+router.post('/manClothe/getAll',manClothe.getAll)
+router.post('/manClothe/getSingle',manClothe.getSingle)
+router.post('/manClothe/update',clothUpload.single('manClotheImage'),manClothe.update)
+router.post('/manClothe/block',manClothe.block)
 
 module.exports = router
