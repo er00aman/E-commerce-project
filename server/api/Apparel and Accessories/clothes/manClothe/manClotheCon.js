@@ -10,6 +10,9 @@ const add = (req,res)=>{
     if(!data.clotheName)
     validation.push('Clothe name')
 
+    if(!data.clotheType)
+    validation.push('Clothe type')
+
     if(!data.clothePrice)
     validation.push('Clothe price')
 
@@ -35,6 +38,7 @@ const add = (req,res)=>{
 
                 clothObj.categoryId = data.categoryId
                 clothObj.clotheName = data.clotheName
+                clothObj.clotheType = data.clotheType
                 clothObj.clothePrice = data.clothePrice
                 clothObj.description = data.description
 
@@ -68,7 +72,9 @@ const add = (req,res)=>{
 
 
 const getAll = (req,res)=>{
-    manClothe.find(req.body).then(findObj1=>{
+    manClothe.find(req.body)
+    .populate('categoryId')
+    .then(findObj1=>{
         res.json({
             success:true,
             status:200,
@@ -98,7 +104,9 @@ const getSingle = (req,res)=>{
             message:validation.join(',')+' is/are required'
         })
     }else{
-        manClothe.findOne({_id:data._id}).then(findData=>{
+        manClothe.findOne({_id:data._id})
+        .populate('categoryId')
+        .then(findData=>{
             if(!findData){
                 res.json({
                     success:false,
@@ -132,7 +140,9 @@ const update = (req,res)=>{
             message:validation.join(',')+' is/are required'
         })
     }else{
-        manClothe.findOne({_id:data._id}).then(findData1=>{
+        manClothe.findOne({_id:data._id})
+        .populate('categoryId')
+        .then(findData1=>{
             if(!findData1){
                 res.json({
                     success:false,
@@ -145,6 +155,9 @@ const update = (req,res)=>{
 
                 if(data.clotheName)
                 findData1.clotheName = data.clotheName
+
+                if(data.clotheType)
+                findData1.clotheType = data.clotheType
 
                 if(data.clothePrice)
                 findData1.clothePrice = data.clothePrice
@@ -194,7 +207,9 @@ block = (req,res)=>{
             message:validation.join(',')+' is/are required'
         })
     }else{
-        manClothe.findOne({_id:data._id}).then(findData2=>{
+        manClothe.findOne({_id:data._id})
+        .populate('categoryId')
+        .then(findData2=>{
             if(!findData2){
                 res.json({
                     success:false,
